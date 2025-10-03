@@ -1,0 +1,18 @@
+
+
+.toast {
+  position: fixed;         /* stays on screen */
+  top: 20px;               /* move to bottom if you want: bottom: 20px; */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;        /* dark background */
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  z-index: 9999;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+
