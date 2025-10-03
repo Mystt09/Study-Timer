@@ -1,0 +1,184 @@
+body {
+  background-color: #F1F5F9;
+  color: #1F2937;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2, .label {
+  color: #1F2937;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#Day, #format {
+  font-size: 16px;
+  font-weight: bold;
+  color: #3B82F6;
+}
+
+/* --- BUTTON CONTAINER --*/
+
+.button-rectangle{
+
+  background-color: #f3f4f6; /* Light gray */
+  border: 2px solid #d1d5db; /* Softer border */
+  border-radius: 12px;
+  padding: 20px;
+  width: fit-content;
+  margin: 0 auto; /* Center it horizontally */
+  margin-bottom: 20px; /* space below */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  position: relative; /* important if you add more child positioning later */
+
+
+
+
+}
+
+
+/* --- BUTTON LAYOUT --- */
+.button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+}
+
+.label {
+  margin-bottom: 8px;
+  color: #1F2937;
+}
+
+/* --- BUTTON STYLE --- */
+.circle-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: #2D2D2D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* --- PLAY ICON --- */
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 14px solid #34D399;
+  margin-left: 2px;
+}
+
+/* --- PAUSE ICON --- */
+.pause-icon {
+  display: flex;
+  gap: 3px;
+}
+.bar {
+  width: 4px;
+  height: 16px;
+  background-color: #3B82F6;
+}
+
+/* --- STOP ICON --- */
+.stop-button {
+  background-color: #2D2D2D;
+}
+.stop-square {
+  width: 16px;
+  height: 16px;
+  background-color: #EF4444;
+}
+
+/* --- LOGS --- */
+#logWrapper {
+  position: relative;
+  max-width: 640px;
+  margin: 30px auto;
+}
+
+
+   #logContainer {
+  border: 1px solid gray;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+
+  /* Add these lines below */
+  max-width: 640px;
+  margin: 0 auto;
+  background-color: #f9f9f9; /* Optional: Light background for readability */
+  font-family: monospace;    /* Optional: To mimic code-like appearance */
+  white-space: pre-wrap;     /* Optional: Preserve line breaks like code */
+}
+
+.log-section {
+  max-width: 640px;
+  margin: 0 auto; /* Center the whole section */
+}
+
+.log-buttons {
+  display: flex;
+  justify-content: flex-start; /* Align to the left */
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.log-buttons button {
+  background-color: #34578d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.log-buttons button:hover {
+  background-color: #8e99b0;
+}
+
+.circle-button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 20px;
+  margin-top: -10px; /* adjust this if you want it tighter with the box */
+}
+
+.status-box {
+  display: flex;                /* enables Flexbox */
+  align-items: center;          /* vertically center */
+  justify-content: center;      /* horizontally center */
+  
+  width: 200px;                 /* or max-width if preferred */
+  margin: 15px auto;
+  padding: 10px 16px;
+  background-color: #E5E7EB;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #1F2937;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;      
+}
+
+#statusText {
+  padding-left: 15px;  
+}
+

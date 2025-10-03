@@ -1,7 +1,8 @@
 {
   "name": "study-timer",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A lightweight timer to track study sessions.",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,5 +26,15 @@
     "globals": "^16.3.0",
     "nodemon": "^3.1.10",
     "vite": "^7.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mystt09/Study-Timer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mystt09/Study-Timer/issues"
+  },
+  "homepage": "https://github.com/Mystt09/Study-Timer#readme"
 }

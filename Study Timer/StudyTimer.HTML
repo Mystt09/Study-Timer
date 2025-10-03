@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Timer</title>
+    <link rel="stylesheet" href="ButtonStyle.css" />
+    <link rel="stylesheet" href="TextStyles.css" />
+
+</head>
+
+<body>
+
+    <h1 id="title"> Study Timer</h1>
+
+     <p id="Day"></p>
+
+     <p id="format"></p>
+
+     <div id="startPopup"></div>
+     
+     <div id="breakPopup"></div>
+
+     <div id="restartPopup"></div>
+     <div id="rePopup"></div>
+
+     <!--  <div class="container"> 
+
+    </div>
+
+    <div class="timerDisplay">
+        00 : 00 : 00 : 000
+    </div>
+
+
+    <div class="buttons">
+        <button id="pauseTimer">Pause</button>
+        <button id="startTimer">Start</button>
+        <button id="resetTimer">Reset</button>
+    </div>
+
+--> 
+    
+
+     
+
+ 
+
+
+
+
+<!--<input type="button" onclick="starttTime()" value = "Start Timer"> -->
+
+<!-- BUTTON DESIGN -->
+
+<!-- BUTTON DESIGN -->
+
+
+
+
+<div id="logWrapper">
+
+
+
+  <!-- Centered Button Row ABOVE the log box -->
+
+  <div class="button-rectangle">
+
+
+  <div class="circle-button-row">
+    <div class="button-wrapper">
+      <div class="label">Start</div>
+      <button id="Start" class="circle-button">
+        <div class="triangle"></div>
+      </button>
+    </div>
+
+    <div class="button-wrapper">
+      <div class="label">Break</div>
+      <button id ="Break" class="circle-button">
+        <div class="pause-icon">
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </button>
+    </div>
+    <div class="button-wrapper">
+      <div class="label">End</div>
+      <button id = "End" class="circle-button stop-button">
+        <div class="stop-square"></div>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="status-box">
+    Status: <span id="statusText"> OUT</span>
+  </div>
+
+  </div>
+  
+  
+
+</div>
+
+
+   <!-- <button id="Break">Break</button>
+     <button id="End">End</button>
+-->
+    <p id="TimeStarted"></p>
+     
+
+     
+    <p id="break"></p>
+    <p id="breakElapsed"></p>
+
+    <p id="TimeEnded"></p>
+
+    <p id="elapsed"></p>
+
+
+<div class="log-section">
+  
+    <div id="logContainer">
+
+        <ul  style="list-style-type: none;" id = "Logs"></ul>
+
+    </div> 
+
+    <div class="log-buttons">
+
+      <button onclick="copyLogs()">Copy</button>
+      <button onclick="downloadLogs()">Download</button>
+
+    </div>
+
+</div>
+
+ 
+
+ 
+   
+
+ <!-- <div id = "Time"></div> -->
+  
+
+    
+   
+
+
+
+     <script type="module" src="Main.js"></script>
+
+</body>
+</html>
