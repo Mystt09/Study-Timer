@@ -5,8 +5,8 @@ import './App.css';
 // ------------ helpers ------------
 const uid = () => Math.random().toString(36).slice(2);
 
-// TEMP stubs so file runs without your IndexedDB helpers.
-// Replace these with your real idbGet/idbSet or remove them later.
+
+
 async function idbGet(_key) { return null; }
 async function idbSet(_key, _val) {}
 
@@ -360,7 +360,7 @@ function StudyTimer() {
 
     
 
-{/* END control panel  */}
+
 
 {/* NEW control panel */} 
 
