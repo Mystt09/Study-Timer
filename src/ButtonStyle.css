@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap');
+
 body {
   background-color: #F1F5F9;
   color: #1F2937;
@@ -25,7 +28,7 @@ main.page-main {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: #566fba;
+  background: #254363;
   border-bottom: 2px solid #1f2937;
   padding: 20px 16px 40px 40px;
 }
@@ -33,10 +36,10 @@ main.page-main {
 .App { flex: 1; display: flex; flex-direction: column; }
 
 /* title row in header */
-.app-title { margin: 0; font-size: 40px; line-height: 1.1; color: #1F2937; }
+.app-title { margin: 0; font-size: 40px; line-height: 1.1; font-family: 'Source Sans 3', sans-serif; color: #ecf2fd; }
 .app-title-row { display: flex; align-items: center; gap: 16px; }
-.title-divider { width: 2px; height: 30px; background-color: #1f2937; margin-left: 20px; margin-top: 6px; }
-.app-subtitle { display: flex; align-items: center; gap: 8px; font-size: 18px; color: #475569; margin-left: 25px; }
+.title-divider { width: 2px; height: 30px; background-color: #c1d2e9; margin-left: 20px; margin-top: 6px; }
+.app-subtitle { display: flex; align-items: center; gap: 8px; font-size: 18px; color: #edf1f7; margin-left: 25px; }
 .app-subtitle .dot { opacity: 0.5; }
 
 /* tabs */
@@ -165,7 +168,7 @@ section.content-area { width: 100%; max-width: 1200px; margin: 16px auto; paddin
 
 .control-panel {
   width: 360px;
-  box-shadow: 0 0 36px rgba(236,72,153,.28),
+  box-shadow: 0 0 36px rgba(148, 196, 241, 0.28),
               0 8px 24px rgba(0,0,0,.25);
   border-radius: 20px;   /* keeps the overall rounded shape */
   overflow: hidden;      /* trims children to fit radius */
@@ -181,7 +184,7 @@ section.content-area { width: 100%; max-width: 1200px; margin: 16px auto; paddin
 }
 
 .control-body {
-  background: #5a2447;   /* maroon here */
+  background: #687084;   /* maroon here */
   color: #f5e9f2;
   padding: 20px;
   min-height: 200px;     /* adjust height */

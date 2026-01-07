@@ -1,6 +1,6 @@
 
 // useAutoSaveLogs.js
-
+/*
 import { useEffect } from 'react';
 
 export function useAutoSaveLogs(logs) {
@@ -44,3 +44,4 @@ export function useAutoSaveLogs(logs) {
 }
 
 export default useAutoSaveLogs;
+*/

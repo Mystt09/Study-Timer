@@ -1,14 +1,25 @@
 // App.jsx
 import { useRef, useState, useEffect } from 'react';
 import './App.css';
+import { idbGet, idbSet, idbGetAll } from './storage.js';
 
-// ------------ helpers ------------
+
+
+// ------------ HELPERS ------------
+
 const uid = () => Math.random().toString(36).slice(2);
+
 
 
 
 async function idbGet(_key) { return null; }
 async function idbSet(_key, _val) {}
+
+// TEMP stubs so file runs without your IndexedDB helpers 
+// Replace these with your real idbGet/idbSet or remove them later 
+//async function idbGet(_key) { return null; }
+//async function idbSet(_key, _val) {}
+
 
 // ------------ Quick Stats (Today + Week) ------------
 // ------------ Quick Stats (Today + Week) ------------
@@ -57,12 +68,21 @@ function QuickStats({ title, selectedActivity, startTime, sessions = [] }) {
   const displayWeek = weekTotal + liveStudy;
 
   const weekLabel = (() => {
+
     const d = sow;
-    const opts = { year: "numeric", month: "short", day: "numeric" };
+
+    const opts = {
+
+       year: "numeric", month: "short", day: "numeric" 
+
+      };
+
     return `Week of ${d.toLocaleDateString(undefined, opts)}`;
+
   })();
 
   return (
+
     <div className="qs-band">
       <div className="qs-row">
         <div className="qs-left">
@@ -97,8 +117,10 @@ function QuickStats({ title, selectedActivity, startTime, sessions = [] }) {
   );
 }
 
-// ------------ main component ------------
+// ------------ MAIN COMPONENT ------------
+
 function StudyTimer() {
+
   // header date/time
   const [day, setDay] = useState('');
   const [date, setDate] = useState('');
@@ -115,7 +137,8 @@ function StudyTimer() {
   const [rows, setRows] = useState([]);
   const [copied, setCopied] = useState(false);
 
-  // toast
+  // toast (POP UPS)
+
   const [toast, setToast] = useState(null);
   const showToast = (m, ms = 2000) => {
     setToast(m);
@@ -124,6 +147,7 @@ function StudyTimer() {
   };
 
   // control panel bits
+
   const [title, setTitle] = useState('');
   const [activityOptions, setActivityOptions] = useState(['Study', 'Reading', 'Practice', 'Project']);
   const [selectedActivity, setSelectedActivity] = useState(null);
@@ -131,7 +155,7 @@ function StudyTimer() {
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
-  // draggable panel
+  // draggable panel (removed) 
   const dragRef = useRef(null);
   const [panelPos, setPanelPos] = useState({ x: 24, y: 8 });
   const dragData = useRef({ dragging: false, offsetX: 0, offsetY: 0 });
@@ -166,36 +190,18 @@ function StudyTimer() {
     const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     setDay(days[d.getDay()]);
     setDate(`${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`);
+
   }, []);
 
   // sessions history (each End creates a summary)
   const [sessions, setSessions] = useState([]); // [{id,dateISO,studyMs,breakMs,createdAt,activity,title}]
 
-  // load from idb (stubs now)
-  useEffect(() => {
-    let mounted = true;
+ 
 
-    Promise.all([
-      idbGet('rows'),
-      idbGet('meta'),
-      idbGet('sessions')
-    ]).then(([savedRows, meta, savedSessions]) => {
-      if (!mounted) return;
-      if (Array.isArray(savedRows)) setRows(savedRows);
-      if (meta) {
-        setStatus(meta.status ?? 'OUT');
-        setStudyTotal(meta.studyTotal ?? 0);
-        setBreakTotal(meta.breakTotal ?? 0);
-        setTitle(meta.title ?? '');
-        setSelectedActivity(meta.selectedActivity ?? null);
-      }
-      if (Array.isArray(savedSessions)) setSessions(savedSessions);
-    }).catch(() => { /* ignore for now */ });
-
-    return () => { mounted = false; };
-  }, []);
+  // IDB START 
 
   // save to idb (stubs now)
+  /*
   useEffect(() => {
     const t = setTimeout(() => {
       idbSet('rows', rows);
@@ -210,14 +216,113 @@ function StudyTimer() {
     }, 350);
     return () => clearTimeout(t);
   }, [rows, status, studyTotal, breakTotal, title, selectedActivity, sessions]);
+*/
 
+// LOAD 
+
+const [hydrated, setHydrated] = useState(false);
+
+/*
+useEffect(() => {
+  let alive = true;
+
+  (async () => {
+    const [rows, meta, sessions] = await Promise.all([
+
+      idbGet('rows', 'rows'),
+      idbGet('meta', 'meta'),
+      idbGetAll('sessions')
+
+    ]);
+
+    if (!alive) return;
+
+    if (rows) setRows(rows);
+    if (meta) {
+      setStatus(meta.status);
+      setStudyTotal(meta.studyTotal);
+      setBreakTotal(meta.breakTotal);
+      setTitle(meta.title);
+      setSelectedActivity(meta.selectedActivity);
+    }
+    if (sessions) setSessions(sessions);
+  })();
+
+  return () => { alive = false; };
+}, []);
+*/
+
+useEffect(() => {
+  let alive = true;
+
+  (async () => {
+    try {
+      const [rows, meta, sessions] = await Promise.all([
+        idbGet('rows', 'rows'),
+        idbGet('meta', 'meta'),
+        idbGetAll('sessions')
+      ]);
+
+      if (!alive) return;
+
+      if (rows) setRows(rows);
+      if (meta) {
+        setStatus(meta.status ?? 'OUT');
+        setStudyTotal(meta.studyTotal ?? 0);
+        setBreakTotal(meta.breakTotal ?? 0);
+        setTitle(meta.title ?? '');
+        setSelectedActivity(meta.selectedActivity ?? null);
+      }
+      if (sessions) setSessions(sessions);
+
+      setHydrated(true);
+    } catch (e) {
+      console.error('IDB load failed', e);
+      setHydrated(true); // still allow render
+    }
+  })();
+
+  return () => { alive = false; };
+}, []);
+
+// SAVE 
+/*
+useEffect(() => {
+
+  const t = setTimeout(() => {
+
+    idbSet('rows', 'rows', rows);
+    idbSet('meta', 'meta', {
+      status,
+      studyTotal,
+      breakTotal,
+      title,
+      selectedActivity
+    });
+
+  }, 300);
+
+  return () => clearTimeout(t);
+}, [rows, status, studyTotal, breakTotal, title, selectedActivity]);
+
+useEffect(() => {
+  sessions.forEach(s => {
+    idbSet('sessions', s.id, s);
+  });
+}, [sessions]);
+
+*/
   // helpers
+
   const nowStr = () => new Date().toLocaleTimeString();
   const msToTime = (ms) => {
+
     const s = Math.floor((ms / 1000) % 60);
     const m = Math.floor((ms / (1000 * 60)) % 60);
     const h = Math.floor(ms / (1000 * 60 * 60));
+
     return `${h}h ${m}m ${s}s`;
+
   };
 
   const addRow = (label, details = []) => {
@@ -226,31 +331,44 @@ function StudyTimer() {
       { id: uid(), label, timeStr: nowStr(), open: false, details }
     ]);
   };
+
   const toggleRow = (id) => {
     setRows((prev) => prev.map(r => r.id === id ? { ...r, open: !r.open } : r));
   };
 
   // actions
   function handleStart() {
+
     if (startTime !== null) { showToast('Already started'); return; }
+
     const now = Date.now();
+
     setStartTime(now);
     setStatus('STUDYING');
 
     if (breakTime !== null) {
+
       const elapsedBreak = now - breakTime;
+
       setBreakTotal((t) => t + elapsedBreak);
+
       addRow('Resume', [
+
         `elapsed break: ${msToTime(elapsedBreak)}`,
         `total break: ${msToTime(breakTotal + elapsedBreak)}`
+
       ]);
+
       setBreakTime(null);
+
     } else {
+
       addRow('Start', ['(insert elapsed time details here)']);
     }
   }
 
   function handleBreak() {
+
     if (breakTime !== null) { showToast('Already on break'); return; }
     if (startTime === null) { showToast('Press Start first'); return; }
 
@@ -258,19 +376,33 @@ function StudyTimer() {
     const elapsedStudy = now - startTime;
 
     setStudyTotal((t) => t + elapsedStudy);
+
     setStartTime(null);
     setBreakTime(now);
+
     setStatus('ON BREAK');
 
     addRow('Break', [
+
       `elapsed study: ${msToTime(elapsedStudy)}`,
       `total study: ${msToTime(studyTotal + elapsedStudy)}`
+
     ]);
   }
 
   function handleEnd() {
-  if (endTime !== null) { showToast('Session already ended'); return; }
-  if (startTime == null && breakTime == null) { showToast('Nothing to end'); return; }
+
+  if (endTime !== null) { showToast('Session already ended'); 
+    return; 
+  
+  }
+
+  if (startTime == null && breakTime == null) { 
+
+    showToast('Nothing to end'); 
+
+    return;
+   }
 
   const now = Date.now();
   setEndTime(now);
@@ -281,15 +413,19 @@ function StudyTimer() {
   const endDetails = [];
 
   if (startTime !== null) {
+
     elapsedStudy = now - startTime;
-    setStudyTotal(prev => prev + elapsedStudy); // ✅ still grows total
+    setStudyTotal(prev => prev + elapsedStudy);
     endDetails.push(`elapsed study: ${msToTime(elapsedStudy)}`);
+
   }
 
   if (breakTime !== null) {
+
     elapsedBreak = now - breakTime;
     setBreakTotal(prev => prev + elapsedBreak);
     endDetails.push(`elapsed break: ${msToTime(elapsedBreak)}`);
+
   }
 
   endDetails.push(`total study: ${msToTime(studyTotal + elapsedStudy)}`);
@@ -300,8 +436,9 @@ function StudyTimer() {
 
   addRow('End', endDetails);
 
-  // ✅ log only this session’s increment
+  //log only this session’s increment
   const dateISO = new Date().toISOString().slice(0,10);
+
   setSessions(prev => [
     ...prev,
     {
@@ -318,10 +455,13 @@ function StudyTimer() {
 
 
   // copy / download
+
   const flatText = rows.map(r => {
+
     const head = `${r.label.toLowerCase()}: ${r.timeStr}`;
     if (!r.details?.length) return head;
     return [head, ...r.details].join('\n  ');
+
   }).join('\n');
 
   function copyLogs() {
@@ -330,6 +470,7 @@ function StudyTimer() {
       setTimeout(() => setCopied(false), 1500);
     });
   }
+
   function downloadLogs() {
     const blob = new Blob([flatText], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -340,9 +481,42 @@ function StudyTimer() {
     URL.revokeObjectURL(url);
   }
 
-  // ------------ render ------------
+  
+
+
+  
+
+// SAVE 
+useEffect(() => {
+  if (!hydrated) return;
+
+  idbSet('rows', 'rows', rows);
+  idbSet('meta', 'meta', {
+    status,
+    studyTotal,
+    breakTotal,
+    title,
+    selectedActivity
+  });
+}, [hydrated, rows, status, studyTotal, breakTotal, title, selectedActivity]);
+
+useEffect(() => {
+  if (!hydrated) return;
+
+  sessions.forEach(s => {
+    idbSet('sessions', s.id, s);
+  });
+}, [hydrated, sessions]);
+
+if (!hydrated) {
+  return <div>Loading…</div>;
+}
+
+  // ------------ START OF RENDER ------------
 
   return (
+
+    
     <div className="App">
       <header className="app-header">
         <div className="app-title-row">
