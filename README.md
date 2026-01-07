@@ -1,4 +1,4 @@
-# Study Timer ⏱️
+# Study Timer 
 
 This web app is for tracking the amount of time a student has spent, studying or working on assignments. 
 This project was built to visualize workflow. Knowing how long something takes can help with knowing when to start to meet a deadline. 
